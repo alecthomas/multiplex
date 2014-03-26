@@ -1,0 +1,2 @@
+#!/bin/bash
+which godocdown > /dev/null 2>&1 && godocdown > README.md 2> /dev/null && git add README.md

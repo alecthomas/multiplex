@@ -1,0 +1,6 @@
+# Multiplexed streams for Go [![Build Status](https://travis-ci.org/alecthomas/multiplex.png)](https://travis-ci.org/alecthomas/multiplex)
+
+{{ .EmitSynopsis }}
+
+{{ .EmitUsage }}
+
