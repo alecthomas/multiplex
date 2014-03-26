@@ -54,18 +54,23 @@ over it and write "hello" to each.
 const (
 	SYN = 1 << iota
 	RST = 1 << iota
-
-	FragmentSize = 1024
 )
 ```
 Packet flags.
 
 ```go
+const (
+	// FragmentSize (in bytes) of packet fragments.
+	FragmentSize = 1024
+)
+```
+
+```go
 var (
+	// ErrInvalidChannel is returned when an attempt is made to write to an invalid channel.
 	ErrInvalidChannel = errors.New("invalid channel")
 )
 ```
-Various errors.
 
 #### type Channel
 

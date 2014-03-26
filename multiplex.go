@@ -87,12 +87,15 @@ import (
 const (
 	SYN = 1 << iota
 	RST = 1 << iota
+)
 
+const (
+	// FragmentSize (in bytes) of packet fragments.
 	FragmentSize = 1024
 )
 
-// Various errors.
 var (
+	// ErrInvalidChannel is returned when an attempt is made to write to an invalid channel.
 	ErrInvalidChannel = errors.New("invalid channel")
 )
 
