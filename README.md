@@ -3,50 +3,53 @@
 Package multiplex provides multiplexed streams over a single underlying
 transport `io.ReadWriteCloser`.
 
-Any system that requires a large number of independent TCP connections
-could benefit from this package, by instead having each client maintain a
-single multiplexed connection. There is essentially very little cost to
-creating new channels, or maintaining a large number of open channels.
-Ideal for long term waiting.
+Any system that requires a large number of independent TCP connections could
+benefit from this package, by instead having each client maintain a single
+multiplexed connection. There is essentially very little cost to creating new
+channels, or maintaining a large number of open channels. Ideal for long term
+waiting.
 
 An interesting side-effect of this multiplexing is that once the underlying
-connection has been established, each end of the connection can both
-`Accept()` and `Dial()`. This allows for elegant push notifications and
-other interesting approaches.
+connection has been established, each end of the connection can both `Accept()`
+and `Dial()`. This allows for elegant push notifications and other interesting
+approaches.
+
 
 ### Documentation
 
-Can be found  on [godoc.org](http://godoc.org/github.com/alecthomas/multiplex) or below.
+Can be found on [godoc.org](http://godoc.org/github.com/alecthomas/multiplex) or
+below.
 
 ### Example Server
 
-	ln, err := net.Listen("tcp", ":1234")
-	for {
-	    conn, err := ln.Accept()
-	    go func(conn net.Conn) {
-	        mx := multiplex.MultiplexedServer(conn)
-	        for {
-	            c, err := mx.Accept()
-	            go handleConnection(c)
-	        }
-	    }()
-	}
+    ln, err := net.Listen("tcp", ":1234")
+    for {
+        conn, err := ln.Accept()
+        go func(conn net.Conn) {
+            mx := multiplex.MultiplexedServer(conn)
+            for {
+                c, err := mx.Accept()
+                go handleConnection(c)
+            }
+        }()
+    }
+
 
 ### Example Client
 
-Connect to a server with a single TCP connection, then create 10K channels
-over it and write "hello" to each.
+Connect to a server with a single TCP connection, then create 10K channels over
+it and write "hello" to each.
 
-	conn, err := net.Dial("tcp", "127.0.0.1:1234")
-	mx := multiplex.MultiplexedClient(conn)
+    conn, err := net.Dial("tcp", "127.0.0.1:1234")
+    mx := multiplex.MultiplexedClient(conn)
 
-	for i := 0; i < 10000; i++ {
-	    go func() {
-	        c, err := mx.Dial()
-	        n, err := c.Write([]byte("hello"))
-	        c.Close()
-	    }()
-	}
+    for i := 0; i < 10000; i++ {
+        go func() {
+            c, err := mx.Dial()
+            n, err := c.Write([]byte("hello"))
+            c.Close()
+        }()
+    }
 
 ## Usage
 

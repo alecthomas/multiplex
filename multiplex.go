@@ -80,7 +80,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"launchpad.net/tomb"
+	"gopkg.in/tomb.v1"
 )
 
 // Packet flags.
