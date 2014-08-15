@@ -1,2 +1,6 @@
 #!/bin/bash
-which godocdown > /dev/null 2>&1 && godocdown > README.md 2> /dev/null && git add README.md
+if which godocdown > /dev/null 2>&1; then
+  godocdown > README.md 2> /dev/null && git add README.md
+else
+  echo "warning: godocdown not found, can't update README.md" 1>&2
+fi
